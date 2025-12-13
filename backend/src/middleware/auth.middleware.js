@@ -9,7 +9,7 @@ const authFoodPartnerMiddleware = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, 'aditya123');
-        const foodPartner = await foodPartnerModel.findById(decoded.userId);
+        const foodPartner = await foodPartnerModel.findById(decoded.foodPartnerId);
         if (!foodPartner) {
             return res.status(401).json({ message: 'Unauthorized - Food partner not found' });
         }
