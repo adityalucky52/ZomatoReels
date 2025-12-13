@@ -71,7 +71,7 @@ const logoutUser = (req, res) => {
 
 const registerFoodPartner = async (req, res) => {
     //registration logic for food partner
-    const { name, email, password } = req.body;
+    const { name, contactName, phone, address, email, password } = req.body;
     try {
         const isAccountExists = await foodPartnerModel.findOne({ email });
         if (isAccountExists) {
@@ -81,17 +81,24 @@ const registerFoodPartner = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const foodPartner = new foodPartnerModel({
             name,
+            contactName,
+            phone,
+            address,
             email,
             password: hashedPassword
         });
 
+        await foodPartner.save();
+
         const token = jwt.sign({ foodPartnerId: foodPartner._id }, 'aditya123', { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true });
-        await foodPartner.save();
 
         res.status(201).json({ message: 'Food Partner registered successfully',user:{
             _id: foodPartner._id,
             name: foodPartner.name,
+            contactName: foodPartner.contactName,
+            phone: foodPartner.phone,
+            address: foodPartner.address,
             email: foodPartner.email
         } });
     } catch (error) {
