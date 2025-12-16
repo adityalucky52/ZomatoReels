@@ -1,25 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../styles/auth-shared.css';
 
 const ChooseRegister = () => {
   return (
-    <div className="auth-page-wrapper">
-      <div className="auth-card" role="region" aria-labelledby="choose-register-title">
-        <header>
-          <h1 id="choose-register-title" className="auth-title">Register</h1>
-          <p className="auth-subtitle">Pick how you want to join the platform.</p>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8" role="region" aria-labelledby="choose-register-title">
+        <header className="mb-6">
+          <h1 id="choose-register-title" className="text-3xl font-bold text-gray-900 mb-2">Register</h1>
+          <p className="text-gray-600">Pick how you want to join the platform.</p>
         </header>
-        <div style={{display:'flex', flexDirection:'column', gap:'16px'}}>
-          <Link to="/user/register" className="auth-submit" style={{textDecoration:'none'}}>
+        <div className="flex flex-col gap-4">
+          <Link to="/user/register" className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition-colors text-center no-underline">
             Register as normal user
           </Link>
-          <Link to="/food-partner/register" className="auth-submit" style={{textDecoration:'none', background:'var(--color-surface-alt)', color:'var(--color-text)', border:'1px solid var(--color-border)'}}>
+          <Link to="/food-partner/register" className="w-full bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 rounded-lg border border-gray-300 transition-colors text-center no-underline">
             Register as food partner
           </Link>
         </div>
-        <div className="auth-alt-action" style={{marginTop:'4px'}}>
-          Already have an account? <Link to="/user/login">Sign in</Link>
+        <div className="mt-6 text-center text-sm text-gray-600">
+          Already have an account? <Link to="/user/login" className="text-red-600 hover:text-red-700 font-medium">Sign in</Link>
         </div>
       </div>
     </div>

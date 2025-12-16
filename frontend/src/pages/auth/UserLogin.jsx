@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../styles/auth-shared.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,25 +24,25 @@ const UserLogin = () => {
   };
 
   return (
-    <div className="auth-page-wrapper">
-      <div className="auth-card" role="region" aria-labelledby="user-login-title">
-        <header>
-          <h1 id="user-login-title" className="auth-title">Welcome back</h1>
-          <p className="auth-subtitle">Sign in to continue your food journey.</p>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8" role="region" aria-labelledby="user-login-title">
+        <header className="mb-6">
+          <h1 id="user-login-title" className="text-3xl font-bold text-gray-900 mb-2">Welcome back</h1>
+          <p className="text-gray-600">Sign in to continue your food journey.</p>
         </header>
-        <form className="auth-form" onSubmit={handleSubmit} noValidate>
-          <div className="field-group">
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" autoComplete="email" />
+        <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+          <div className="space-y-2">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" autoComplete="email" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition" />
           </div>
-          <div className="field-group">
-            <label htmlFor="password">Password</label>
-            <input id="password" name="password" type="password" placeholder="••••••••" autoComplete="current-password" />
+          <div className="space-y-2">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <input id="password" name="password" type="password" placeholder="••••••••" autoComplete="current-password" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition" />
           </div>
-          <button className="auth-submit" type="submit">Sign In</button>
+          <button className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition-colors" type="submit">Sign In</button>
         </form>
-        <div className="auth-alt-action">
-          New here? <a href="/user/register">Create account</a>
+        <div className="mt-6 text-center text-sm text-gray-600">
+          New here? <a href="/user/register" className="text-red-600 hover:text-red-700 font-medium">Create account</a>
         </div>
       </div>
     </div>
