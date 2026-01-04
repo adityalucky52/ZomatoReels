@@ -24,7 +24,7 @@ const registerUser = async (req, res) => {
         res.cookie('token', token, { httpOnly: true });
 
         
-        res.status(201).json({ message: 'User registered successfully', userId: {
+        res.status(201).json({ message: 'User registered successfully', user: {
             _id: user._id,
             fullname: user.fullname,
             email: user.email
@@ -54,7 +54,7 @@ const loginUser = async (req, res) => {
         }
         const token = jwt.sign({ userId: user._id }, 'aditya123', { expiresIn: '1h' });
         res.cookie('token', token);
-        res.status(200).json({ message: 'Login successful', userId: {
+        res.status(200).json({ message: 'Login successful', user: {
             _id: user._id,
             fullname: user.fullname,
             email: user.email
@@ -135,7 +135,55 @@ const logoutFoodPartner = (req, res) => {
     res.status(200).json({ message: 'Logout successful' });
 }
 
-module.exports = { registerUser, loginUser, logoutUser, registerFoodPartner, loginFoodPartner, logoutFoodPartner };
+const getMe = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        
+        if (!token) {
+            return res.status(401).json({ message: 'Not authenticated' });
+        }
+
+        const decoded = jwt.verify(token, 'aditya123');
+
+        // Check if it's a user token
+        if (decoded.userId) {
+            const user = await userModel.findById(decoded.userId).select('-password');
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            return res.status(200).json({ 
+                user: {
+                    _id: user._id,
+                    fullname: user.fullname,
+                    email: user.email,
+                    userType: 'user'
+                }
+            });
+        }
+
+        // Check if it's a food partner token
+        if (decoded.foodPartnerId) {
+            const foodPartner = await foodPartnerModel.findById(decoded.foodPartnerId).select('-password');
+            if (!foodPartner) {
+                return res.status(404).json({ message: 'Food partner not found' });
+            }
+            return res.status(200).json({ 
+                user: {
+                    _id: foodPartner._id,
+                    name: foodPartner.name,
+                    email: foodPartner.email,
+                    userType: 'foodpartner'
+                }
+            });
+        }
+
+        return res.status(401).json({ message: 'Invalid token' });
+    } catch (error) {
+        return res.status(401).json({ message: 'Authentication failed', error: error.message });
+    }
+}
+
+module.exports = { registerUser, loginUser, logoutUser, registerFoodPartner, loginFoodPartner, logoutFoodPartner, logoutUser,getMe };
 
 
     

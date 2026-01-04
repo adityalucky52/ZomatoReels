@@ -11,9 +11,9 @@ router.post('/user/logout', authController.logoutUser);
 router.post('/foodpartner/register', authController.registerFoodPartner);
 router.post('/foodpartner/login', authController.loginFoodPartner);
 router.post('/foodpartner/logout', authController.logoutFoodPartner);
-
-
-
-
+//general logout route (works for both user types)
+router.post('/logout', authController.logoutUser);
+//check auth status
+router.get('/me', authController.getMe);
 
 module.exports = router;

@@ -6,7 +6,7 @@ const API_BASE_URL = 'http://localhost:3000/api/auth';
 
 const useAuthStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       // State
       user: null,
       isAuthenticated: false,
@@ -28,9 +28,8 @@ const useAuthStore = create(
             isAuthenticated: true,
             isLoading: false,
             userType: 'user',
-            error: null,
           });
-          return { success: true, data: response.data };
+          return { success: true };
         } catch (error) {
           const errorMessage = error.response?.data?.message || 'Login failed';
           set({ isLoading: false, error: errorMessage });
@@ -52,9 +51,8 @@ const useAuthStore = create(
             isAuthenticated: true,
             isLoading: false,
             userType: 'foodpartner',
-            error: null,
           });
-          return { success: true, data: response.data };
+          return { success: true };
         } catch (error) {
           const errorMessage = error.response?.data?.message || 'Login failed';
           set({ isLoading: false, error: errorMessage });
@@ -76,9 +74,8 @@ const useAuthStore = create(
             isAuthenticated: true,
             isLoading: false,
             userType: 'user',
-            error: null,
           });
-          return { success: true, data: response.data };
+          return { success: true };
         } catch (error) {
           const errorMessage = error.response?.data?.message || 'Registration failed';
           set({ isLoading: false, error: errorMessage });
@@ -100,9 +97,8 @@ const useAuthStore = create(
             isAuthenticated: true,
             isLoading: false,
             userType: 'foodpartner',
-            error: null,
           });
-          return { success: true, data: response.data };
+          return { success: true };
         } catch (error) {
           const errorMessage = error.response?.data?.message || 'Registration failed';
           set({ isLoading: false, error: errorMessage });
@@ -114,17 +110,12 @@ const useAuthStore = create(
       logout: async () => {
         set({ isLoading: true, error: null });
         try {
-          await axios.post(
-            `${API_BASE_URL}/logout`,
-            {},
-            { withCredentials: true }
-          );
+          await axios.post(`${API_BASE_URL}/logout`, {}, { withCredentials: true });
           set({
             user: null,
             isAuthenticated: false,
             isLoading: false,
             userType: null,
-            error: null,
           });
           return { success: true };
         } catch (error) {
@@ -138,25 +129,20 @@ const useAuthStore = create(
       checkAuth: async () => {
         set({ isLoading: true, error: null });
         try {
-          const response = await axios.get(
-            `${API_BASE_URL}/me`,
-            { withCredentials: true }
-          );
+          const response = await axios.get(`${API_BASE_URL}/me`, { withCredentials: true });
           set({
             user: response.data.user,
             isAuthenticated: true,
             isLoading: false,
             userType: response.data.user?.userType || response.data.user?.type,
-            error: null,
           });
-          return { success: true, data: response.data };
+          return { success: true };
         } catch (error) {
           set({
             user: null,
             isAuthenticated: false,
             isLoading: false,
             userType: null,
-            error: null,
           });
           return { success: false };
         }
@@ -164,13 +150,9 @@ const useAuthStore = create(
 
       // Clear Error
       clearError: () => set({ error: null }),
-
-      // Update User
-      updateUser: (userData) => set({ user: userData }),
-}),
+    }),
     {
-      name: 'auth-storage', // localStorage key
-      partialPersist: true,
+      name: 'auth-storage',
     }
   )
 );

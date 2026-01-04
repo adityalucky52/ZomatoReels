@@ -10,6 +10,7 @@ async function uploadFile(file, fileName) {
     const result = await imagekit.upload({
         file: file, // required
         fileName: fileName, // required
+        folder: "/zato"
     })
 
     return result; // Return the URL of the uploaded file
