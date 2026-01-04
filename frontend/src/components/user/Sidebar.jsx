@@ -6,7 +6,7 @@ const Sidebar = () => {
   const location = useLocation()
   
   return (
-    <div className="w-64 border-r-2 border-gray-900 p-6 flex flex-col gap-4">
+    <div className="w-64 h-screen fixed left-0 top-0 border-r-2 border-gray-900 p-6 flex flex-col gap-4 bg-white">
       {/* Logo */}
       <div className="bg-white rounded-xl p-4 border-2 border-gray-900 mb-4">
         <h1 className="text-xl font-bold text-gray-900 tracking-tight">

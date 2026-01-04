@@ -17,6 +17,7 @@ import Saved from "../components/Saved";
 import Reels from "../components/reels/Reels";
 import SingleReel from "../components/reels/SingleReel";
 import FoodPartnerLayout from "../layouts/FoodPartnerLayout";
+import UserLayout from "../layouts/UserLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoute = () => {
@@ -30,11 +31,13 @@ const AppRoute = () => {
         <Route path="/food-partner/register" element={<ProtectedRoute element={<FoodPartnerRegister />} guestOnly />} />
         <Route path="/food-partner/login" element={<ProtectedRoute element={<FoodPartnerLogin />} guestOnly />} />
 
-        {/* User only routes */}
-        <Route path="/" element={<ProtectedRoute element={<Home />} allowedType="user" />} />
-        <Route path="/reels" element={<ProtectedRoute element={<Reels />} allowedType="user" />} />
-        <Route path="/reels/:reelId" element={<ProtectedRoute element={<SingleReel />} allowedType="user" />} />
-        <Route path="/saved" element={<ProtectedRoute element={<Saved />} allowedType="user" />} />
+        {/* User only routes with layout */}
+        <Route element={<ProtectedRoute element={<UserLayout />} allowedType="user" />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/reels" element={<Reels />} />
+          <Route path="/reels/:reelId" element={<SingleReel />} />
+          <Route path="/saved" element={<Saved />} />
+        </Route>
 
         {/* Food partner only routes with layout */}
         <Route element={<ProtectedRoute element={<FoodPartnerLayout />} allowedType="foodpartner" redirectTo="/food-partner/login" />}>
