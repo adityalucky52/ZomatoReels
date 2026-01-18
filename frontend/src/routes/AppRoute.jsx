@@ -14,7 +14,6 @@ import Profile from "../components/foodpartner/Profile";
 import Dashboard from "../components/foodpartner/Dashboard";
 import Home from "../components/user/Home";
 import Saved from "../components/Saved";
-import Reels from "../components/reels/Reels";
 import SingleReel from "../components/reels/SingleReel";
 import FoodPartnerLayout from "../layouts/FoodPartnerLayout";
 import UserLayout from "../layouts/UserLayout";
@@ -25,7 +24,7 @@ const AppRoute = () => {
     <Router>
       <Routes>
         {/* Guest only routes */}
-        <Route path="/register" element={<ProtectedRoute element={<ChooseRegister />} guestOnly />} />
+        <Route path="/choose" element={<ProtectedRoute element={<ChooseRegister />} guestOnly />} />
         <Route path="/user/register" element={<ProtectedRoute element={<UserRegister />} guestOnly />} />
         <Route path="/user/login" element={<ProtectedRoute element={<UserLogin />} guestOnly />} />
         <Route path="/food-partner/register" element={<ProtectedRoute element={<FoodPartnerRegister />} guestOnly />} />
@@ -34,20 +33,18 @@ const AppRoute = () => {
         {/* User only routes with layout */}
         <Route element={<ProtectedRoute element={<UserLayout />} allowedType="user" />}>
           <Route path="/" element={<Home />} />
-          <Route path="/reels" element={<Reels />} />
+          <Route path="/reels" element={<SingleReel />} />
           <Route path="/reels/:reelId" element={<SingleReel />} />
           <Route path="/saved" element={<Saved />} />
+          <Route path="/food-partner/:id" element={<Profile />} />
         </Route>
 
         {/* Food partner only routes with layout */}
         <Route element={<ProtectedRoute element={<FoodPartnerLayout />} allowedType="foodpartner" redirectTo="/food-partner/login" />}>
           <Route path="/food-partner/dashboard" element={<Dashboard />} />
           <Route path="/create-food" element={<CreateFood />} />
-          <Route path="/food-partner/:id" element={<Profile />} />
-          
-        </Route>
 
-        {/* Public food partner profile */}
+        </Route>
       </Routes>
     </Router>
   );

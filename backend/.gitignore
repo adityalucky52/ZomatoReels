@@ -1,5 +1,0 @@
-node_modules/
-
-# Optional: ignore logs and env files
-npm-debug.log*
-.env

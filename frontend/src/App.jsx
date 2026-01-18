@@ -7,11 +7,11 @@ function App() {
 
   useEffect(() => {
     checkAuth()
-  }, [])
+  }, [checkAuth])
 
   return (
     <>
-     <AppRoute/>
+      <AppRoute />
     </>
   )
 }
